@@ -1,9 +1,12 @@
 import React, { memo } from "react";
 import { Switch, Route } from "react-router-dom";
-import AuthHero from "../Components/AuthHero";
+import AuthHero from "../../Components/AuthHero";
+import { User } from "../../modals/User";
 import LoginPage from "./Login.page";
 import SignupPage from "./Signup.page";
-interface Props {}
+interface Props {
+  onLoginApp: (user: User) => void;
+}
 
 const Auth: React.FC<Props> = (props) => {
   return (
@@ -11,7 +14,7 @@ const Auth: React.FC<Props> = (props) => {
       <Switch>
         <div className="w-1/2">
           <Route path="/login">
-            <LoginPage />
+            <LoginPage onLoginAuth={props.onLoginApp} />
           </Route>
           <Route path="/signup">
             <SignupPage />

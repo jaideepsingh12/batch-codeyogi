@@ -4,10 +4,13 @@ import { HiLockClosed } from "react-icons/hi";
 import { FaSpinner } from "react-icons/fa";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Input from "../Components/Input";
-import { login } from "../api";
+import Input from "../../Components/Input";
+import { login } from "../../api/auth";
+import { User } from "../../modals/User";
 
-interface Props {}
+interface Props {
+  onLoginAuth: (user: User) => void;
+}
 const Login: React.FC<Props> = (props) => {
   // const [data, setData] = useState({ email: "jaideepsingh12@gmail.com", password: "" });
   // const [touched, setTouched] = useState({ email: false, password: false });
@@ -43,7 +46,10 @@ const Login: React.FC<Props> = (props) => {
       //   console.log("form submitted successfully");
       //   history.push("/dashboard");
       // }, 5000);
-      login(data);
+      login(data).then((u) => {
+        props.onLoginAuth(u);
+        history.push("/dashboard");
+      });
     },
   });
 
@@ -118,7 +124,8 @@ const Login: React.FC<Props> = (props) => {
           <div>
             <button
               type="submit"
-              disabled={!myForm.isValid}
+              disabled={!myForm.dirty}
+              onClick={() => console.log("button clicked")}
               className="relative flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md group hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
